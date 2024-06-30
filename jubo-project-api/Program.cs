@@ -1,13 +1,17 @@
+using FluentValidation.AspNetCore;
 using jubo_project_api.Helpers;
 using jubo_project_api.Infrastructure;
 using jubo_project_api.Infrastructure.Repositories;
 using jubo_project_api.Middlewares;
+using jubo_project_api.Models;
 using jubo_project_api.Services;
 using jubo_project_api.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<UpdateOrderRequest>());
+
 builder.Services.AddScoped<PatientOrderContext>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
