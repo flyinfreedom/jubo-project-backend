@@ -29,4 +29,7 @@ public class OrderRepository(PatientOrderContext context, MongoDbHelper mongoDbH
 
         return order;
     }
+
+    public Task<bool> OrderExistAsync(string orderId)
+        => context.Orders.Find(Builders<Order>.Filter.Eq("_id", orderId)).AnyAsync();
 }

@@ -1,4 +1,5 @@
 ﻿using jubo_project_api.Entities;
+using jubo_project_api.Exceptions;
 using jubo_project_api.Services.Interface;
 
 namespace jubo_project_api.Services;
@@ -15,6 +16,13 @@ public class OrderService(IOrderRepository orderRepository, IPatientRepository p
         return order;
     }
 
-    public Task<Order> UpdateOrderAsync(Order order)
-        => orderRepository.UpdateOrderAsync(order);
+    public async Task<Order> UpdateOrderAsync(Order order)
+    { 
+        if(!await orderRepository.OrderExistAsync(order.Id)) 
+        {
+            throw new NotFoundException($"找不到 Id為 {order.Id}的醫囑");
+        }
+
+        return await orderRepository.UpdateOrderAsync(order);
+    }
 }

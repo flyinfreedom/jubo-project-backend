@@ -7,4 +7,5 @@ public interface IOrderRepository
     public Task<IEnumerable<Order>> GetOrdersAsync(List<string> orderIds);
     public Task<Order> CreateOrderAsync(string message);
     public Task<Order> UpdateOrderAsync(Order order);
+    public Task<bool> OrderExistAsync(string orderId);
 }
